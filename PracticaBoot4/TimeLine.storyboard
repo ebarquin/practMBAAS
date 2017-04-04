@@ -35,6 +35,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="yMV-An-MNP">
+                        <barButtonItem key="leftBarButtonItem" title="login" id="ZB1-oC-GNW">
+                            <connections>
+                                <segue destination="RWD-2x-LvQ" kind="show" identifier="launchAuthentication" id="m4a-7H-aC9"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" style="done" systemItem="compose" id="J3K-Up-OeR">
                             <connections>
                                 <segue destination="fz7-Mj-aJx" kind="show" identifier="AddPost" id="rNV-QY-y6a"/>
@@ -52,6 +57,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Slk-sO-Fc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1071.2" y="184.85757121439281"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="WKu-en-JAY">
+            <objects>
+                <viewController id="RWD-2x-LvQ" customClass="LoginViewController" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qnb-J4-kf1"/>
+                        <viewControllerLayoutGuide type="bottom" id="oQs-iu-ls0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Smm-If-Pn8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-zC-ELl">
+                                <rect key="frame" x="132" y="204" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Login with email"/>
+                                <connections>
+                                    <action selector="loginWithMail:" destination="RWD-2x-LvQ" eventType="touchUpInside" id="pQI-2G-I4C"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Ig-ve-k2i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001" y="888"/>
         </scene>
         <!--Title-->
         <scene sceneID="8Bj-Bn-m5H">
