@@ -8,8 +8,12 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    //Create reference
+    let rootRef = FIRDatabase.database().reference().child("Posts")
 
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
@@ -29,6 +33,18 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        rootRef.observe(FIRDataEventType.value, with: { (snap) in
+            print(snap)
+
+        }) { (error) in
+            print(error)
+        
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -44,6 +60,14 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     @IBAction func savePostInCloud(_ sender: Any) {
         // preparado para implementar codigo que persita en el cloud 
+        
+        let key = rootRef.child("Posts").childByAutoId().key
+        
+        let posts = ["title": titlePostTxt, "description": textPostTxt]
+        
+        let recordInFB = ["\(key)" : posts]
+        
+        rootRef.child("Posts").updateChildValues(recordInFB)
     }
     /*
     // MARK: - Navigation
@@ -59,7 +83,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     internal func pushAlertCameraLibrary() -> UIAlertController {
         let actionSheet = UIAlertController(title: NSLocalizedString("Selecciona la fuente de la imagen", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
         
-        let libraryBtn = UIAlertAction(title: NSLocalizedString("Ussar la libreria", comment: ""), style: .default) { (action) in
+        let libraryBtn = UIAlertAction(title: NSLocalizedString("Usar la libreria", comment: ""), style: .default) { (action) in
             self.takePictureFromCameraOrLibrary(.photoLibrary)
             
         }
