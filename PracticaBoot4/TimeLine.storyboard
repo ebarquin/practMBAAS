@@ -78,6 +78,14 @@
                                     <action selector="loginWithMail:" destination="RWD-2x-LvQ" eventType="touchUpInside" id="pQI-2G-I4C"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UiN-Sb-vhb">
+                                <rect key="frame" x="163" y="261" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="logout:" destination="RWD-2x-LvQ" eventType="touchUpInside" id="qHA-bB-4HM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

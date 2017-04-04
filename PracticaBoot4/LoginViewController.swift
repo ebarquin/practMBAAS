@@ -37,6 +37,16 @@ class LoginViewController: UIViewController {
         showUserLoginDialog(withCommand: login, userAction: .toLogin)
     }
     
+    @IBAction func logout(_ sender: Any) {
+        if let _ = FIRAuth.auth()?.currentUser {
+            do {
+                try FIRAuth.auth()?.signOut()
+            } catch let error {
+                print(error)
+            }
+        }
+        
+    }
     fileprivate func login(_ name: String, andPass pass: String){
         FIRAuth.auth()?.signIn(withEmail: name, password: pass, completion: { ( user, error ) in
             if let _ = error {
