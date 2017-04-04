@@ -63,7 +63,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let key = rootRef.child("Posts").childByAutoId().key
         
-        let posts = ["title": titlePostTxt, "description": textPostTxt]
+        let posts = ["title": titlePostTxt.text, "description": textPostTxt.text]
         
         let recordInFB = ["\(key)" : posts]
         
