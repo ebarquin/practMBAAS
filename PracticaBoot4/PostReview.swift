@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class PostReview: UIViewController {
-
+    
     @IBOutlet weak var rateSlider: UISlider!
     @IBOutlet weak var imagePost: UIImageView!
     @IBOutlet weak var postTxt: UITextField!
@@ -18,13 +18,12 @@ class PostReview: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         FIRAnalytics.setScreenName("PostReviewViewController", screenClass: "PostReveiew")
 
         // Do any additional setup after loading the view.
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

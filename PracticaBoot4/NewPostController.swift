@@ -67,7 +67,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let recordInFB = ["\(key)" : posts]
         
-        rootRef.child("Posts").updateChildValues(recordInFB)
+        rootRef.updateChildValues(recordInFB)
     }
     /*
     // MARK: - Navigation

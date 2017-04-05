@@ -11,8 +11,9 @@ import Firebase
 
 class MainTimeLine: UITableViewController {
 
-    var model = ["post1", "post2"]
-    let cellIdentier = "POSTSCELL"
+    let cellIdentfier = "POSTSCELL"
+    let rootRef = FIRDatabase.database().reference().child("Posts")
+    var model: [Post] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,28 @@ class MainTimeLine: UITableViewController {
         FIRAnalytics.setScreenName("MainTimeLine", screenClass: "Main")
         
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        rootRef.observe(FIRDataEventType.value, with: { ( snap ) in
+            
+            for postFB in snap.children {
+                
+                let post = Post(snap: (postFB as! FIRDataSnapshot))
+                self.model.append(post)
+                
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+            
+        }) { (error) in
+            print(error)
+        }
+        
     }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
@@ -49,9 +72,9 @@ class MainTimeLine: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentfier, for: indexPath)
 
-        cell.textLabel?.text = model[indexPath.row]
+        cell.textLabel?.text = "prueba"
 
         return cell
     }
