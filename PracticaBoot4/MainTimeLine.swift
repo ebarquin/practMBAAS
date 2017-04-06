@@ -15,6 +15,7 @@ class MainTimeLine: UITableViewController {
     let cellIdentfier = "POSTSCELL"
     let rootRef = FIRDatabase.database().reference().child("Posts")
     var model: [Post] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,22 +53,14 @@ class MainTimeLine: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        rootRef.observe(FIRDataEventType.value, with: { ( snap ) in
-            
-            for postFB in snap.children {
-                
-                let post = Post(snap: (postFB as! FIRDataSnapshot))
-                self.model.append(post)
-                
-            }
-            DispatchQueue.main.async {
+        let posts = getDataFromFirebase()
+        self.model = posts
+
+        DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
             
-            
-        }) { (error) in
-            print(error)
-        }
+        
         
     }
     
@@ -94,8 +87,9 @@ class MainTimeLine: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentfier, for: indexPath)
-
-        cell.textLabel?.text = "prueba"
+        
+        
+        cell.textLabel?.text = model[indexPath.row].title
 
         return cell
     }
@@ -115,6 +109,28 @@ class MainTimeLine: UITableViewController {
             let vc = segue.destination as! PostReview
             // aqui pasamos el item selecionado
         }
+    }
+    
+    //MARK: Utils:
+    
+    func getDataFromFirebase() -> [Post] {
+        
+        var posts: [Post] = []
+        
+        rootRef.observe(FIRDataEventType.value, with: { ( snap ) in
+            
+            for postFB in snap.children {
+                
+                let post = Post(snap: (postFB as! FIRDataSnapshot))
+                posts.append(post)
+                
+            }
+            
+            
+        }) { (error) in
+            print(error)
+        }
+        return posts
     }
 
 
