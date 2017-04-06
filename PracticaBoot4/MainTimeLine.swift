@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class MainTimeLine: UITableViewController {
 
@@ -26,7 +27,27 @@ class MainTimeLine: UITableViewController {
         FIRAnalytics.setScreenName("MainTimeLine", screenClass: "Main")
         
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
+        
+//        rootRef.observe(FIRDataEventType.value, with: { ( snap ) in
+//            
+//            for postFB in snap.children {
+//                
+//                let post = Post(snap: (postFB as! FIRDataSnapshot))
+//                self.model.append(post)
+//                
+//            }
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//            
+//            
+//        }) { (error) in
+//            print(error)
+//        }
+
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

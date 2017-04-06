@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 class Post: NSObject {
     
@@ -24,7 +25,7 @@ class Post: NSObject {
     init(snap: FIRDataSnapshot?) {
         refInCloud = snap?.ref
         
-        desc = (snap?.value as? [String: Any])?["desc"] as! String
+        desc = (snap?.value as? [String: Any])?["description"] as! String
         title = (snap?.value as? [String: Any])?["title"] as! String
     }
     
