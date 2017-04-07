@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseAuth
 
 class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -63,7 +64,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let key = rootRef.child("Posts").childByAutoId().key
         
-        let posts = ["title" : titlePostTxt.text, "description" : textPostTxt.text, "author": "hola"]
+let posts = ["title" : titlePostTxt.text as Any, "description" : textPostTxt.text as Any, "author" : FIRAuth.auth()?.currentUser?.uid as Any] as [String : Any]
         
         let recordInFB = ["\(key)" : posts]
         
