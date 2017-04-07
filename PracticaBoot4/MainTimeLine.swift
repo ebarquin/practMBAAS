@@ -53,13 +53,10 @@ class MainTimeLine: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let posts = getDataFromFirebase()
-        self.model = posts
+        getDataFromFirebase()
+        
 
-        DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
+
         
         
     }
@@ -125,13 +122,20 @@ class MainTimeLine: UITableViewController {
                 posts.append(post)
                 
             }
+            //return posts
+            self.model = posts
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             
             
         }) { (error) in
             print(error)
         }
         return posts
+        
     }
+    
 
 
 }
