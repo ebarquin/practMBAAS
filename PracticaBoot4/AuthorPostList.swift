@@ -8,12 +8,14 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class AuthorPostList: UITableViewController {
 
     let cellIdentifier = "POSTAUTOR"
+    let rootAuthorRef = FIRDatabase.database().reference().child("Posts").queryEqual(toValue:FIRAuth.auth()?.currentUser?.uid, childKey: "author")
     
-    var model = ["test1", "test2"]
+    var model : [Post] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,11 @@ class AuthorPostList: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getDataFromFirebase()
     }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
@@ -51,7 +58,7 @@ class AuthorPostList: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        cell.textLabel?.text = model[indexPath.row]
+        cell.textLabel?.text = model[indexPath.row].title
     
         return cell
     }
@@ -113,5 +120,32 @@ class AuthorPostList: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    //MARK: Utils
+    
+    func getDataFromFirebase() {
+        
+        var posts: [Post] = []
+        
+        rootAuthorRef.observe(FIRDataEventType.value, with: { ( snap ) in
+            
+            for postFB in snap.children {
+                
+                let post = Post(snap: (postFB as! FIRDataSnapshot))
+                posts.append(post)
+                
+            }
+            
+            self.model = posts
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+            
+        }) { (error) in
+            print(error)
+        }
+        
+    }
+    
 }

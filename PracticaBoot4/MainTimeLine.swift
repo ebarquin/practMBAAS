@@ -28,27 +28,8 @@ class MainTimeLine: UITableViewController {
         FIRAnalytics.setScreenName("MainTimeLine", screenClass: "Main")
         
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
-        
-//        rootRef.observe(FIRDataEventType.value, with: { ( snap ) in
-//            
-//            for postFB in snap.children {
-//                
-//                let post = Post(snap: (postFB as! FIRDataSnapshot))
-//                self.model.append(post)
-//                
-//            }
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//            
-//            
-//        }) { (error) in
-//            print(error)
-//        }
 
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -108,9 +89,9 @@ class MainTimeLine: UITableViewController {
         }
     }
     
-    //MARK: Utils:
+    //MARK: Utils
     
-    func getDataFromFirebase() -> [Post] {
+    func getDataFromFirebase() {
         
         var posts: [Post] = []
         
@@ -122,7 +103,7 @@ class MainTimeLine: UITableViewController {
                 posts.append(post)
                 
             }
-            //return posts
+            
             self.model = posts
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -132,7 +113,6 @@ class MainTimeLine: UITableViewController {
         }) { (error) in
             print(error)
         }
-        return posts
         
     }
     
