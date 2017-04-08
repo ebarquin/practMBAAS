@@ -14,4 +14,7 @@ target 'PracticaBoot4' do
   # Pods for Auth
   pod 'Firebase/Auth'
 
+  # Pods for Storage
+  pod 'Firebase/Storage'
+
 end
