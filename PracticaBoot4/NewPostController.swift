@@ -13,9 +13,12 @@ import FirebaseAuth
 
 class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //Create reference
+    //Create  database reference
     let rootRef = FIRDatabase.database().reference().child("Posts")
-
+    
+    //Create storage reference
+    let storeRef = FIRStorage.storage().reference().child("Images")
+    
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
     @IBOutlet weak var imagePost: UIImageView!
@@ -64,11 +67,28 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let key = rootRef.child("Posts").childByAutoId().key
         
-let posts = ["title" : titlePostTxt.text as Any, "description" : textPostTxt.text as Any, "author" : FIRAuth.auth()?.currentUser?.uid as Any] as [String : Any]
+        let posts = ["title" : titlePostTxt.text as Any, "description" : textPostTxt.text as Any, "author" : FIRAuth.auth()?.currentUser?.uid as Any] as [String : Any]
         
         let recordInFB = ["\(key)" : posts]
         
         rootRef.updateChildValues(recordInFB)
+        
+        //uploadImageToFirebaseStorage(data: <#T##Data#>)
+        
+    }
+    
+    func uploadImageToFirebaseStorage(data: Data) {
+        let storageRef = storeRef.child((FIRAuth.auth()?.currentUser?.uid)!)
+        let uploadMetadata = FIRStorageMetadata()
+        uploadMetadata.contentType = "image/jpeg"
+        storageRef.put(data, metadata: uploadMetadata) { (metadata, error) in
+            if (error != nil) {
+                print("\(error?.localizedDescription)")
+            } else {
+                print("Upload Compelte!")
+            }
+        }
+        
     }
     /*
     // MARK: - Navigation

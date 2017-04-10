@@ -143,7 +143,7 @@ class AuthorPostList: UITableViewController {
             
             
         }) { (error) in
-            print(error)
+            print(error.localizedDescription)
         }
         
     }
