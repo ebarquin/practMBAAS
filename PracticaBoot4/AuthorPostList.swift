@@ -13,8 +13,7 @@ import FirebaseDatabase
 class AuthorPostList: UITableViewController {
 
     let cellIdentifier = "POSTAUTOR"
-    let rootAuthorRef = FIRDatabase.database().reference().child("Posts").queryEqual(toValue:FIRAuth.auth()?.currentUser?.uid, childKey: "author")
-    
+    let rootRef = FIRDatabase.database().reference().child("Posts")
     var model : [Post] = []
     
     override func viewDidLoad() {
@@ -33,7 +32,9 @@ class AuthorPostList: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getDataFromFirebase()
+        let currentUser = FIRAuth.auth()?.currentUser?.uid
+        getDataFromFirebase(userID: currentUser!)
+        
     }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
@@ -123,11 +124,12 @@ class AuthorPostList: UITableViewController {
     
     //MARK: Utils
     
-    func getDataFromFirebase() {
+    func getDataFromFirebase(userID: String) {
+        
         
         var posts: [Post] = []
         
-        rootAuthorRef.observe(FIRDataEventType.value, with: { ( snap ) in
+        rootRef.queryOrdered(byChild: "UserID").queryEqual(toValue: userID).observe(FIRDataEventType.value, with: { ( snap ) in
             
             for postFB in snap.children {
                 

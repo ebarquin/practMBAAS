@@ -15,12 +15,12 @@ class Post: NSObject {
     var title : String
     var desc: String
     var refInCloud: FIRDatabaseReference?
-    var author: String
+    var userID: String
     
-    init(title: String, desc: String, author: String) {
+    init(title: String, desc: String, userID: String) {
         self.title = title
         self.desc = desc
-        self.author = author
+        self.userID = userID
         self.refInCloud = nil
         
     }
@@ -30,7 +30,7 @@ class Post: NSObject {
         
         desc = (snap?.value as? [String: Any])?["description"] as! String
         title = (snap?.value as? [String: Any])?["title"] as! String
-        author = (snap?.value as? [String: Any])?["author"] as! String
+        userID = (snap?.value as? [String: Any])?["userID"] as! String
         
     }
     

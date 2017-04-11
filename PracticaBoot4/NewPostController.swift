@@ -67,7 +67,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         
         let key = rootRef.child("Posts").childByAutoId().key
         
-        let posts = ["title" : titlePostTxt.text as Any, "description" : textPostTxt.text as Any, "author" : FIRAuth.auth()?.currentUser?.uid as Any] as [String : Any]
+        let posts = ["title" : titlePostTxt.text as Any, "description" : textPostTxt.text as Any, "userID" : FIRAuth.auth()?.currentUser?.uid as Any] as [String : Any]
         
         let recordInFB = ["\(key)" : posts]
         
